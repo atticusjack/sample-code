@@ -43,9 +43,9 @@ class UserRepositoryTest
 
     @Test
     @Sql("/sql-scripts/user-repository/findUserEntityByHid.sql")
-    void findUserEntityByHid_returnsUser_whenUserIsInDB()
+    void findByHid_returnsUser_whenUserIsInDB()
     {
-        final Optional<UserEntity> actualUser = userRepository.findUserEntityByHid("testHid");
+        final Optional<UserEntity> actualUser = userRepository.findByHid("testHid");
 
         assertThat(actualUser.isPresent()).isTrue();
         assertThat(actualUser.get().getFirstName()).isEqualTo("first_name");
@@ -56,9 +56,9 @@ class UserRepositoryTest
 
     @Test
     @Sql("/sql-scripts/user-repository/findUserEntityByHid.sql")
-    void findUserEntityByHid_returnsEmptyOptional_whenUserIsNotInDB()
+    void findByHid_returnsEmptyOptional_whenUserIsNotInDB()
     {
-        final Optional<UserEntity> actualUser = userRepository.findUserEntityByHid("notTestHid");
+        final Optional<UserEntity> actualUser = userRepository.findByHid("notTestHid");
 
         assertThat(actualUser.isEmpty()).isTrue();
     }
