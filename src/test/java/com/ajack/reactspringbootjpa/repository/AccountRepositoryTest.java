@@ -12,6 +12,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -70,5 +71,23 @@ class AccountRepositoryTest
         final Optional<AccountEntity> actualAccount = accountRepository.findById(UUID.randomUUID());
 
         assertThat(actualAccount.isEmpty()).isTrue();
+    }
+
+    @Test
+    @Sql("/sql-scripts/account-repository/create-accounts-with-duplicate-names.sql")
+    void findByName_returnsAllAccountsWithTheSameName_whenAccountsAreInDB()
+    {
+        final List<AccountEntity> actualAccounts = accountRepository.findByName("duplicate name");
+
+        assertThat(actualAccounts.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Sql("/sql-scripts/account-repository/create-accounts-with-duplicate-names.sql")
+    void findByName_returnsEmptyList_whenAccountsAreNotInDB()
+    {
+        final List<AccountEntity> shouldBeEmpty = accountRepository.findByName("not duplicate name");
+
+        assertThat(shouldBeEmpty.isEmpty()).isTrue();
     }
 }
