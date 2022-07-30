@@ -3,7 +3,6 @@ package com.ajack.reactspringbootjpa.repository;
 import com.ajack.reactspringbootjpa.model.entity.AccountEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -89,5 +88,27 @@ class AccountRepositoryTest
         final List<AccountEntity> shouldBeEmpty = accountRepository.findByName("not duplicate name");
 
         assertThat(shouldBeEmpty.isEmpty()).isTrue();
+    }
+
+    @Test
+    @Sql("/sql-scripts/account-repository/create-accounts-associated-with-organizations.sql")
+    void findDistinctByOrganizations_EinIsInn_returnsListOfAccounts_whenAccountsAreInDB()
+    {
+        final List<String> eins = List.of("ein 1", "ein 2", "ein 3");
+
+        final List<AccountEntity> actualAccounts = accountRepository.findDistinctByOrganizations_EinIsIn(eins);
+
+        assertThat(actualAccounts.size()).isEqualTo(1);
+    }
+
+    @Test
+    @Sql("/sql-scripts/account-repository/create-accounts-associated-with-organizations.sql")
+    void findDistinctByOrganizations_EinIsInn_returnsEmptyList_whenAccountsAreNotInDB()
+    {
+        final List<String> eins = List.of("ein 7", "ein 8", "ein 9");
+
+        final List<AccountEntity> actualAccounts = accountRepository.findDistinctByOrganizations_EinIsIn(eins);
+
+        assertThat(actualAccounts.isEmpty()).isTrue();
     }
 }

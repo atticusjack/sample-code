@@ -20,9 +20,12 @@ public class OrganizationEntity
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String name;
+    private String customerNumber;
+    private String ein;
+    private String policyNumber;
 
     @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
     private AccountEntity account;
 
     @OneToMany

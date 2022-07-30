@@ -23,7 +23,7 @@ public class AccountEntity
     private UUID id = UUID.randomUUID();
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "account")
     private List<OrganizationEntity> organizations;
 
     @OneToMany

@@ -23,7 +23,9 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS organizations(
     id UUID NOT NULL DEFAULT uuid_generate_v1(),
     account_id UUID NOT NULL,
-    name varchar(100),
+    customer_number VARCHAR(40) NOT NULL,
+    ein VARCHAR(40) NOT NULL,
+    policy_number VARCHAR(40) NOT NULL,
     CONSTRAINT pk_organizations
         PRIMARY KEY (id),
     CONSTRAINT fk_organizations_accounts

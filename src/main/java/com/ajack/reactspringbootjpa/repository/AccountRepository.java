@@ -12,4 +12,6 @@ public interface AccountRepository extends JpaRepository<AccountEntity, UUID>
     Optional<AccountEntity> findById(UUID id);
 
     List<AccountEntity> findByName(String name);
+
+    List<AccountEntity> findDistinctByOrganizations_EinIsIn(List<String> eins);
 }
