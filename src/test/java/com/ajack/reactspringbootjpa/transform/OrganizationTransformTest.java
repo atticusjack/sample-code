@@ -42,4 +42,25 @@ class OrganizationTransformTest
             .policyNumber(policyNumber)
             .build());
     }
+
+    @Test
+    void transformEntityToApi_transformsEntity_toApi()
+    {
+        final String customerNumber = "customer number";
+        final String ein = "ein";
+        final String policyNumber = "policy number";
+        final OrganizationEntity organizationEntity = OrganizationEntity.builder()
+            .customerNumber(customerNumber)
+            .ein(ein)
+            .policyNumber(policyNumber)
+            .build();
+
+        final OrganizationApi actualOrganizationApi = organizationTransform.transformEntityToApi(organizationEntity);
+
+        assertThat(actualOrganizationApi).isEqualTo(OrganizationApi.builder()
+            .customerNumber(customerNumber)
+            .ein(ein)
+            .policyNumber(policyNumber)
+            .build());
+    }
 }

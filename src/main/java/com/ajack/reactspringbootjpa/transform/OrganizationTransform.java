@@ -28,6 +28,10 @@ public class OrganizationTransform
     {
         log.debug("Enter OrganizationTransform.transformEntityToApi; organizationEntity: {}", organizationEntity);
 
-        return null;
+        return OrganizationApi.builder()
+            .customerNumber(organizationEntity.getCustomerNumber())
+            .ein(organizationEntity.getEin())
+            .policyNumber(organizationEntity.getPolicyNumber())
+            .build();
     }
 }
