@@ -20,7 +20,9 @@ public class UserClient
         {
             return Optional.of(
                 ClientUser.builder()
+                    .firstName("test")
                     .hid("000000")
+                    .lastName("sonOfTest")
                     .policies(List.of(
                         ClientPolicy.builder()
                             .customerNumber("customer 1")
