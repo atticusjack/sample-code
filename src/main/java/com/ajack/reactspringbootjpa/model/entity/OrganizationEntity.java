@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @Data
 @Entity
 @NoArgsConstructor
