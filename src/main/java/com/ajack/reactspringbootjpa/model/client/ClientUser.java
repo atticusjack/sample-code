@@ -13,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ClientUser
 {
+    private String firstName;
     private String hid;
+    private String lastName;
     private List<ClientPolicy> policies;
 }
