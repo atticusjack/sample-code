@@ -22,5 +22,6 @@ public class ReportEntity
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "organization_id", nullable = false)
     private OrganizationEntity organization;
 }

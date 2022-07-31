@@ -28,6 +28,6 @@ public class OrganizationEntity
     @JoinColumn(name = "account_id", nullable = false)
     private AccountEntity account;
 
-    @OneToMany
+    @OneToMany(mappedBy = "organization")
     private List<ReportEntity> reports;
 }
