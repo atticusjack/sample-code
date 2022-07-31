@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -46,10 +48,12 @@ class OrganizationTransformTest
     @Test
     void transformEntityToApi_transformsEntity_toApi()
     {
+        final UUID id = UUID.randomUUID();
         final String customerNumber = "customer number";
         final String ein = "ein";
         final String policyNumber = "policy number";
         final OrganizationEntity organizationEntity = OrganizationEntity.builder()
+            .id(id)
             .customerNumber(customerNumber)
             .ein(ein)
             .policyNumber(policyNumber)
@@ -58,6 +62,7 @@ class OrganizationTransformTest
         final OrganizationApi actualOrganizationApi = organizationTransform.transformEntityToApi(organizationEntity);
 
         assertThat(actualOrganizationApi).isEqualTo(OrganizationApi.builder()
+            .id(id)
             .customerNumber(customerNumber)
             .ein(ein)
             .policyNumber(policyNumber)

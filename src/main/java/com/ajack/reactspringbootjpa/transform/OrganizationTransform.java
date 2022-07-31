@@ -29,6 +29,7 @@ public class OrganizationTransform
         log.debug("Enter OrganizationTransform.transformEntityToApi; organizationEntity: {}", organizationEntity);
 
         return OrganizationApi.builder()
+            .id(organizationEntity.getId())
             .customerNumber(organizationEntity.getCustomerNumber())
             .ein(organizationEntity.getEin())
             .policyNumber(organizationEntity.getPolicyNumber())
