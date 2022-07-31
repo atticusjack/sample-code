@@ -24,5 +24,6 @@ public class UserEntity
     private String lastName;
 
     @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
     private AccountEntity account;
 }

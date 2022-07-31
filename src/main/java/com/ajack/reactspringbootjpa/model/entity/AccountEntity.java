@@ -26,6 +26,6 @@ public class AccountEntity
     @OneToMany(mappedBy = "account")
     private List<OrganizationEntity> organizations;
 
-    @OneToMany
+    @OneToMany(mappedBy = "account")
     private List<UserEntity> users;
 }
