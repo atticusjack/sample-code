@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -16,13 +17,16 @@ public class OrganizationService
 {
     private final OrganizationRepository organizationRepository;
     private final OrganizationTransform organizationTransform;
+    private final SecurityContextService securityContextService;
 
     public OrganizationService(
         OrganizationRepository organizationRepository,
-        OrganizationTransform organizationTransform)
+        OrganizationTransform organizationTransform,
+        SecurityContextService securityContextService)
     {
         this.organizationRepository = organizationRepository;
         this.organizationTransform = organizationTransform;
+        this.securityContextService = securityContextService;
     }
 
     public void createOrganization(
@@ -42,6 +46,10 @@ public class OrganizationService
     {
         log.debug("Enter OrganizationService.getOrganizations");
 
-        return null;
+        final String hid = securityContextService.getCurrentlyLoggedInUserHid();
+
+        return organizationRepository.findByAccount_Users_Hid(hid).stream()
+            .map(organizationTransform::transformEntityToApi)
+            .collect(Collectors.toList());
     }
 }

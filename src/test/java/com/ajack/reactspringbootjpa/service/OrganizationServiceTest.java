@@ -12,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +28,9 @@ class OrganizationServiceTest
     @Mock
     private OrganizationTransform organizationTransform;
 
+    @Mock
+    private SecurityContextService securityContextService;
+
     private OrganizationService organizationService;
 
     @BeforeEach
@@ -34,7 +38,7 @@ class OrganizationServiceTest
     {
         this.organizationService = new OrganizationService(
             organizationRepository,
-            organizationTransform);
+            organizationTransform, securityContextService);
     }
 
     @Test
@@ -74,5 +78,35 @@ class OrganizationServiceTest
             .isEqualTo(expectedOrganizationEntity.toBuilder()
                 .account(account)
                 .build());
+    }
+
+    @Test
+    void getOrganizations_getsOrganizationsFromDB_byHid_whenOrganizationsAreInDB()
+    {
+        final String hid = "someHid";
+
+        when(securityContextService.getCurrentlyLoggedInUserHid()).thenReturn(hid);
+
+        final OrganizationEntity expectedOrganizationEntity = OrganizationEntity.builder()
+            .customerNumber("customer")
+            .ein("ein")
+            .policyNumber("policy")
+            .build();
+
+        when(organizationRepository.findByAccount_Users_Hid(hid))
+            .thenReturn(List.of(expectedOrganizationEntity));
+
+        final OrganizationApi expectedOrganizationApi = OrganizationApi.builder()
+            .customerNumber("c")
+            .ein("e")
+            .policyNumber("p")
+            .build();
+
+        when(organizationTransform.transformEntityToApi(expectedOrganizationEntity))
+            .thenReturn(expectedOrganizationApi);
+
+        final List<OrganizationApi> actualOrganizations = organizationService.getOrganizations();
+
+        assertThat(actualOrganizations).isEqualTo(List.of(expectedOrganizationApi));
     }
 }
