@@ -14,5 +14,7 @@ import java.util.UUID;
 public class OrganizationApi
 {
     private UUID id;
-    private String name;
+    private String customerNumber;
+    private String ein;
+    private String policyNumber;
 }
