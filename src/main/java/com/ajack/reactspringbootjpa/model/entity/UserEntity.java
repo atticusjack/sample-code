@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @Data
 @Entity
 @NoArgsConstructor
