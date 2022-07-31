@@ -22,4 +22,12 @@ public class OrganizationTransform
             .policyNumber(organizationApi.getPolicyNumber())
             .build();
     }
+
+    public OrganizationApi transformEntityToApi(
+        final OrganizationEntity organizationEntity)
+    {
+        log.debug("Enter OrganizationTransform.transformEntityToApi; organizationEntity: {}", organizationEntity);
+
+        return null;
+    }
 }
