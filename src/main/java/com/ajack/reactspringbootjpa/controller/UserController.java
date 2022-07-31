@@ -24,7 +24,7 @@ public class UserController
     @GetMapping("/users")
     public ResponseEntity<UserApi> getUser()
     {
-        log.debug("Enter getUser;");
+        log.debug("Enter UserController.getUser;");
 
         return ResponseEntity.ok(userService.getUser());
     }

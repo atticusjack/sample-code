@@ -1,6 +1,5 @@
 package com.ajack.reactspringbootjpa.controller;
 
-import com.ajack.reactspringbootjpa.ReactSpringBootJpaApplication;
 import com.ajack.reactspringbootjpa.model.api.UserApi;
 import com.ajack.reactspringbootjpa.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +10,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -54,18 +55,18 @@ class UserControllerContractTest
 
         when(userService.getUser()).thenReturn(expectedUser);
 
-        var request = get("/api/v1/users")
+        final MockHttpServletRequestBuilder request = get("/api/v1/users")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON);
 
-        var response = mockMvc.perform(request)
+        final MockHttpServletResponse response = mockMvc.perform(request)
             .andDo(MockMvcResultHandlers.print())
             .andExpect(status().isOk())
             .andReturn().getResponse();
 
         assertThat(response).isNotNull();
 
-        var actualUser = objectMapper.readValue(
+        final UserApi actualUser = objectMapper.readValue(
             response.getContentAsString(),
             UserApi.class);
 
