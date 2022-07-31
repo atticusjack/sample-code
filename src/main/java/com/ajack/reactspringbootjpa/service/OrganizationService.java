@@ -8,6 +8,8 @@ import com.ajack.reactspringbootjpa.transform.OrganizationTransform;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class OrganizationService
@@ -34,5 +36,12 @@ public class OrganizationService
         organizationToSave.setAccount(account);
 
         organizationRepository.save(organizationToSave);
+    }
+
+    public List<OrganizationApi> getOrganizations()
+    {
+        log.debug("Enter OrganizationService.getOrganizations");
+
+        return null;
     }
 }
