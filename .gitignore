@@ -38,3 +38,4 @@ out/
 
 ### Node ###
 /src/main/react/node_modules
+/src/main/resources/public
