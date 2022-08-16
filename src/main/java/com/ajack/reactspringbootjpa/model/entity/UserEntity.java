@@ -1,9 +1,6 @@
 package com.ajack.reactspringbootjpa.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -23,6 +20,8 @@ public class UserEntity
     private String hid;
     private String lastName;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private AccountEntity account;

@@ -1,9 +1,6 @@
 package com.ajack.reactspringbootjpa.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -21,6 +18,8 @@ public class ReportEntity
     private UUID id;
     private String name;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "organization_id", nullable = false)
     private OrganizationEntity organization;

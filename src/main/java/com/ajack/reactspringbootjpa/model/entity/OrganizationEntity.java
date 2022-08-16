@@ -1,9 +1,6 @@
 package com.ajack.reactspringbootjpa.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,10 +21,14 @@ public class OrganizationEntity
     private String ein;
     private String policyNumber;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private AccountEntity account;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "organization")
     private List<ReportEntity> reports;
 }

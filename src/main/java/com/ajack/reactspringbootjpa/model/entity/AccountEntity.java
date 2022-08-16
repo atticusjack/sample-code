@@ -1,9 +1,6 @@
 package com.ajack.reactspringbootjpa.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,9 +20,13 @@ public class AccountEntity
     private UUID id = UUID.randomUUID();
     private String name;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "account")
     private List<OrganizationEntity> organizations;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "account")
     private List<UserEntity> users;
 }
