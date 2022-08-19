@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +38,7 @@ public class OrganizationService
             account, organization);
 
         final OrganizationEntity organizationToSave = organizationTransform.transformApiToEntity(organization);
-        organizationToSave.setAccount(account);
+        organizationToSave.setAccounts(Set.of(account));
 
         organizationRepository.save(organizationToSave);
     }
@@ -48,7 +49,7 @@ public class OrganizationService
 
         final String hid = securityContextService.getCurrentlyLoggedInUserHid();
 
-        return organizationRepository.findByAccount_Users_Hid(hid).stream()
+        return organizationRepository.findByAccounts_Users_Hid(hid).stream()
             .map(organizationTransform::transformEntityToApi)
             .collect(Collectors.toList());
     }

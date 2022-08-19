@@ -11,7 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,7 +47,7 @@ public class OrganizationRepositoryTest
     {
         final String hid = "testHid";
 
-        final List<OrganizationEntity> actualOrganizations = organizationRepository.findByAccount_Users_Hid(hid);
+        final Set<OrganizationEntity> actualOrganizations = organizationRepository.findByAccounts_Users_Hid(hid);
 
         assertThat(actualOrganizations.size()).isEqualTo(2);
     }
@@ -58,7 +58,7 @@ public class OrganizationRepositoryTest
     {
         final String hid = "notTestHid";
 
-        final List<OrganizationEntity> actualOrganizations = organizationRepository.findByAccount_Users_Hid(hid);
+        final Set<OrganizationEntity> actualOrganizations = organizationRepository.findByAccounts_Users_Hid(hid);
 
         assertThat(actualOrganizations.isEmpty()).isTrue();
     }

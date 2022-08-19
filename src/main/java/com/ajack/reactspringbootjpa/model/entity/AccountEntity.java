@@ -3,7 +3,8 @@ package com.ajack.reactspringbootjpa.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,11 +23,11 @@ public class AccountEntity
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "account")
-    private List<OrganizationEntity> organizations;
+    @ManyToMany(mappedBy = "accounts")
+    private Set<OrganizationEntity> organizations = new LinkedHashSet<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "account")
-    private List<UserEntity> users;
+    private Set<UserEntity> users;
 }

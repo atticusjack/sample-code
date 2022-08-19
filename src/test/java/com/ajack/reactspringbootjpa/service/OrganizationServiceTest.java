@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,7 +77,7 @@ class OrganizationServiceTest
         final OrganizationEntity capturedOrganizationEntity = organizationArgumentCaptor.getValue();
         assertThat(capturedOrganizationEntity)
             .isEqualTo(expectedOrganizationEntity.toBuilder()
-                .account(account)
+                .accounts(Set.of(account))
                 .build());
     }
 
@@ -93,8 +94,8 @@ class OrganizationServiceTest
             .policyNumber("policy")
             .build();
 
-        when(organizationRepository.findByAccount_Users_Hid(hid))
-            .thenReturn(List.of(expectedOrganizationEntity));
+        when(organizationRepository.findByAccounts_Users_Hid(hid))
+            .thenReturn(Set.of(expectedOrganizationEntity));
 
         final OrganizationApi expectedOrganizationApi = OrganizationApi.builder()
             .customerNumber("c")
