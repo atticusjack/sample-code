@@ -123,8 +123,8 @@ class UserServiceTest
             .id(UUID.randomUUID())
             .build();
 
-        when(accountRepository.findDistinctByOrganizations_EinIsIn(List.of("ein 1", "ein 2", "ein 3")))
-            .thenReturn(List.of(expectedAccount));
+        //when(accountRepository.findDistinctByOrganizations_EinIsIn(List.of("ein 1", "ein 2", "ein 3")))
+        //    .thenReturn(List.of(expectedAccount));
 
         final UserEntity savedUserEntity = UserEntity.builder()
             .account(expectedAccount)
@@ -186,8 +186,8 @@ class UserServiceTest
 
         when(userClient.getPolicyInformationForUser(expectedHid)).thenReturn(expectedClientUser);
 
-        when(accountRepository.findDistinctByOrganizations_EinIsIn(List.of("ein 1", "ein 2", "ein 3")))
-            .thenReturn(List.of());
+        //when(accountRepository.findDistinctByOrganizations_EinIsIn(List.of("ein 1", "ein 2", "ein 3")))
+        //    .thenReturn(List.of());
 
         final AccountEntity accountToBeSaved = AccountEntity.builder()
             .name("test name")

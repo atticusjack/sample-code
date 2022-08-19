@@ -23,8 +23,8 @@ public class AccountEntity
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany(mappedBy = "accounts")
-    private Set<OrganizationEntity> organizations = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "organization")
+    Set<AccountOrganizationEntity> organizations;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

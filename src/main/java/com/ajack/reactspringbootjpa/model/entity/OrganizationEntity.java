@@ -29,9 +29,6 @@ public class OrganizationEntity
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "accounts_organizations",
-        joinColumns = @JoinColumn(name = "organization_id"),
-        inverseJoinColumns = @JoinColumn(name = "account_id"))
-    private Set<AccountEntity> accounts = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "organization")
+    Set<AccountOrganizationEntity> accounts;
 }

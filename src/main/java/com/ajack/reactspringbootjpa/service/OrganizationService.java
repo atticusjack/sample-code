@@ -38,7 +38,7 @@ public class OrganizationService
             account, organization);
 
         final OrganizationEntity organizationToSave = organizationTransform.transformApiToEntity(organization);
-        organizationToSave.setAccounts(Set.of(account));
+        //organizationToSave.setAccounts(Set.of(account));
 
         organizationRepository.save(organizationToSave);
     }
@@ -49,8 +49,9 @@ public class OrganizationService
 
         final String hid = securityContextService.getCurrentlyLoggedInUserHid();
 
-        return organizationRepository.findByAccounts_Users_Hid(hid).stream()
-            .map(organizationTransform::transformEntityToApi)
-            .collect(Collectors.toList());
+        return null;
+//        return organizationRepository.findByAccounts_Users_Hid(hid).stream()
+//            .map(organizationTransform::transformEntityToApi)
+//            .collect(Collectors.toList());
     }
 }

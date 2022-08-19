@@ -68,7 +68,8 @@ public class UserService
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-            final List<AccountEntity> accounts = accountRepository.findDistinctByOrganizations_EinIsIn(eins);
+            final List<AccountEntity> accounts = List.of();
+//            final List<AccountEntity> accounts = accountRepository.findDistinctByOrganizations_EinIsIn(eins);
 
             final AccountEntity account;
 

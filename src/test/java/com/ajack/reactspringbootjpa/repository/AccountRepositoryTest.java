@@ -96,7 +96,7 @@ class AccountRepositoryTest
     {
         final List<String> eins = List.of("ein 1", "ein 2", "ein 3");
 
-        final List<AccountEntity> actualAccounts = accountRepository.findDistinctByOrganizations_EinIsIn(eins);
+        final List<AccountEntity> actualAccounts = accountRepository.findDistinctByOrganizations_DeleteTimestampIsNullAndOrganizations_Organization_EinIn(eins);
 
         assertThat(actualAccounts.size()).isEqualTo(1);
     }
@@ -107,7 +107,7 @@ class AccountRepositoryTest
     {
         final List<String> eins = List.of("ein 7", "ein 8", "ein 9");
 
-        final List<AccountEntity> actualAccounts = accountRepository.findDistinctByOrganizations_EinIsIn(eins);
+        final List<AccountEntity> actualAccounts = accountRepository.findDistinctByOrganizations_DeleteTimestampIsNullAndOrganizations_Organization_EinIn(eins);
 
         assertThat(actualAccounts.isEmpty()).isTrue();
     }
