@@ -6,17 +6,23 @@ import com.ajack.reactspringbootjpa.model.api.UserApi;
 import com.ajack.reactspringbootjpa.model.client.ClientPolicy;
 import com.ajack.reactspringbootjpa.model.client.ClientUser;
 import com.ajack.reactspringbootjpa.model.entity.AccountEntity;
+import com.ajack.reactspringbootjpa.model.entity.OrganizationEntity;
 import com.ajack.reactspringbootjpa.model.entity.UserEntity;
 import com.ajack.reactspringbootjpa.repository.AccountRepository;
 import com.ajack.reactspringbootjpa.repository.UserRepository;
+import com.ajack.reactspringbootjpa.transform.OrganizationTransform;
 import com.ajack.reactspringbootjpa.transform.UserTransform;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
 
 @Service
 @Slf4j
@@ -68,8 +74,8 @@ public class UserService
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-            final List<AccountEntity> accounts = List.of();
-//            final List<AccountEntity> accounts = accountRepository.findDistinctByOrganizations_EinIsIn(eins);
+            final List<AccountEntity> accounts = accountRepository
+                .findDistinctByOrganizations_DeleteTimestampIsNullAndOrganizations_Organization_EinIn(eins);
 
             final AccountEntity account;
 
@@ -79,6 +85,29 @@ public class UserService
                     AccountEntity.builder()
                         .name("test name")
                         .build());
+
+                List<OrganizationApi> userOrganizations = clientUser.get().getPolicies().stream()
+                    .map(clientPolicy -> clientPolicy.getEin().stream()
+                        .map(ein -> OrganizationApi.builder()
+                            .customerNumber(clientPolicy.getCustomerNumber())
+                            .ein(ein)
+                            .policyNumber(clientPolicy.getPolicyNumber())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .flatMap(List::stream)
+                    .collect(Collectors.toList());
+
+                //organizationService.createOrganization();
+
+                ExampleMatcher organizationMatcher = ExampleMatcher.matching()
+                    .withMatcher("customer_number", ignoreCase())
+                    .withMatcher("ein", ignoreCase())
+                    .withMatcher("policy_number", ignoreCase());
+
+//                userOrganizations.forEach(userOrganization -> {
+//                    Example<OrganizationEntity> orgExample = Example.of(org, organizationMatcher);
+//                    boolean exists = userRepository.exists(orgExample);
+//                });
 
                 clientUser.get().getPolicies()
                     .forEach(clientPolicy -> clientPolicy.getEin()

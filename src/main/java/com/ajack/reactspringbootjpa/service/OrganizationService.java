@@ -49,9 +49,8 @@ public class OrganizationService
 
         final String hid = securityContextService.getCurrentlyLoggedInUserHid();
 
-        return null;
-//        return organizationRepository.findByAccounts_Users_Hid(hid).stream()
-//            .map(organizationTransform::transformEntityToApi)
-//            .collect(Collectors.toList());
+        return organizationRepository.findByAccounts_Account_Users_Hid(hid).stream()
+            .map(organizationTransform::transformEntityToApi)
+            .collect(Collectors.toList());
     }
 }

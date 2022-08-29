@@ -11,7 +11,5 @@ import java.util.UUID;
 
 public interface OrganizationRepository extends JpaRepository<OrganizationEntity, UUID>
 {
-    //Set<OrganizationEntity> findByAccounts_Users_Hid(String hid);
-
-
+    Set<OrganizationEntity> findByAccounts_Account_Users_Hid(String hid);
 }
